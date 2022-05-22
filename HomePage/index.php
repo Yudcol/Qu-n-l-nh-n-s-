@@ -1,15 +1,7 @@
 <?php
-    $svName = "localhost";
-    $username = "root";
-    $password = "";
-    $db = "quanly_nhansu";
-
-    $conn = mysqli_connect($svName, $username, $password, $db);
-    if(mysqli_error($conn))
-      echo "Kết nối cơ sở dữ liệu thất bại. ".mysqli_error($conn);
-    else {
-      $sql = "Select * from PHONGBAN inner ";
-    }  
+    include 'dbconfig.php';
+    $sql = "select * FROM phongban inner join nhanvien WHERE nhanvien.maPhongBan = phongban.maPhongBan and nhanvien.maNV = phongban.maTruongP;";
+    $result = mysqli_query($conn, $sql);
 ?>
 
 <!DOCTYPE html>
@@ -177,73 +169,28 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>01</td>
-                                    <td>Phòng nhân sự</td>
-                                    <td>01</td>
-                                    <td>Ngô Tuấn Anh</td>
-                                    <td><img class="img-table" src="../assets/img/avatar_account.webp" alt=""></td>
-                                    <td>0961957832</td>
-                                    <td class="text-center"><span class="table-status-emp status-on">Đang làm việc</span></td>
-                                    <td class="table-td-center"><button class="btn btn-primary btn-sm trash" type="button" title="Xóa">
-                                      <i class="fas fa-trash-alt"></i>
+                            <?php
+                              if($result->num_rows > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                  echo "<tr>";
+                                  echo "<td>". $row['maPhongBan']."</td>";
+                                  echo "<td>". $row['tenPhongBan']."</td>";
+                                  echo "<td>". $row['maTruongP']."</td>";
+                                  echo "<td>". $row['tenNV']."</td>";
+                                  echo '<td><img src="data:image;base64,'.base64_encode($row['avatar']) .'" alt="image" style="width:100px;height:100px;" ></td>';
+                                  echo "<td>". $row['soDT']."</td>";
+                                  echo "<td class='text-center'><span class='table-status-emp status-on'>Đang đi làm</span></td>";
+                                  echo "<td class='table-td-center'><button class='btn btn-primary btn-sm trash' type='button' title='Xóa'>
+                                      <i class='fas fa-trash-alt'></i>
                                       </button>
-                                      <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
-                                        data-toggle="modal" data-target="#ModalUP"><i class="fas fa-edit"></i>
+                                      <button class='btn btn-primary btn-sm edit' type='button' title='Sửa' id='show-emp'
+                                        data-toggle='modal' data-target='#ModalUP'><i class='fas fa-edit'></i>
                                       </button>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                  <td>02</td>
-                                  <td>Phòng kế toán</td>
-                                  <td>04</td>
-                                  <td>Trịnh Phú Tiến</td>
-                                  <td><img class="img-table" src="../assets/img/avatar_account.webp" alt=""></td>
-                                  <td>0961957832</td>
-                                  <td class="text-center"><span class="table-status-emp status-off">Không đi làm</span></td>
-                                  <td class="table-td-center"><button class="btn btn-primary btn-sm trash" type="button" title="Xóa">
-                                    <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                    <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
-                                      data-toggle="modal" data-target="#ModalUP"><i class="fas fa-edit"></i>
-                                    </button>
-                                  </td>
-                                </tr>
-
-                                <tr>
-                                  <td>03</td>
-                                  <td>Phòng marketing</td>
-                                  <td>02</td>
-                                  <td>Hà Quốc Tuấn</td>
-                                  <td><img class="img-table" src="../assets/img/avatar_account.webp" alt=""></td>
-                                  <td>0961957832</td>
-                                  <td class="text-center"><span class="table-status-emp status-off">Không đi làm</span></td>
-                                  <td class="table-td-center"><button class="btn btn-primary btn-sm trash" type="button" title="Xóa">
-                                    <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                    <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
-                                      data-toggle="modal" data-target="#ModalUP"><i class="fas fa-edit"></i>
-                                    </button>
-                                  </td>
-                                </tr>
-
-                                <tr>
-                                  <td>04</td>
-                                  <td>Phòng chăm sóc khách hàng</td>
-                                  <td>03</td>
-                                  <td>Hoàng Thu Cúc</td>
-                                  <td><img class="img-table" src="../assets/img/avatar_account.webp" alt=""></td>
-                                  <td>0961957832</td>
-                                  <td class="text-center"><span class="table-status-emp status-on">Đang làm việc</span></td>
-                                  <td class="table-td-center"><button class="btn btn-primary btn-sm trash" type="button" title="Xóa">
-                                    <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                    <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
-                                      data-toggle="modal" data-target="#ModalUP"><i class="fas fa-edit"></i>
-                                    </button>
-                                  </td>
-                              </tr>
+                                    </td>";
+                                    echo "</tr>";
+                                }
+                              }
+                              ?>
                             </tbody>
                         </table>
                     </div>
