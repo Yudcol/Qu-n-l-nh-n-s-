@@ -1,15 +1,7 @@
 <?php
-    $svName = "localhost";
-    $username = "root";
-    $password = "";
-    $db = "quanly_nhansu";
-
-    $conn = mysqli_connect($svName, $username, $password, $db);
-    if(mysqli_error($conn))
-      echo "Kết nối cơ sở dữ liệu thất bại. ".mysqli_error($conn);
-    else {
-      $sql = 0;
-    }  
+    include 'dbconfig.php';
+    $sql = "SELECT * FROM `nhanvien` INNER JOIN chucvu WHERE nhanvien.maChucVu = chucvu.maChucVu;";
+    $result = mysqli_query($conn, $sql);
 ?>
 
 <!DOCTYPE html>
@@ -164,7 +156,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                              <?php
+                              if($result->num_rows > 0) {
+                                $i = 1;
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                  echo "<tr>";
+                                  echo "<td>". $i."</td>";
+                                  echo "<td>". $row['maNV']."</td>";
+                                  echo '<td><img src="data:image;base64,'.base64_encode($row['avatar']) .'" alt="image" style="width:100px;height:100px;" ></td>';
+                                  echo "<td>". $row['tenNV']."</td>";
+                                  echo "<td>". $row['thanhPho']."</td>";
+                                  echo "<td>". $row['soDT']."</td>";
+                                  echo "<td>". $row['tenChucVu']."</td>";
+                                  echo "<td class='text-center'><span class='table-status-emp status-on'>Đang đi làm</span></td>";
+                                  echo "<td class='table-td-center'><button class='btn btn-primary btn-sm trash' type='button' title='Xóa'>
+                                      <i class='fas fa-trash-alt'></i>
+                                      </button>
+                                      <button class='btn btn-primary btn-sm edit' type='button' title='Sửa' id='show-emp'
+                                        data-toggle='modal' data-target='#ModalUP'><i class='fas fa-edit'></i>
+                                      </button>
+                                    </td>";
+                                    echo "</tr>";
+                                    $i++;
+                                }
+                              }
+                              ?>
+                                <!-- <tr>
                                     <td>01</td>
                                     <td>2019600822</td>
                                     <td><img class="img-table" src="../assets/img/avatar_account.webp" alt=""></td>
@@ -234,7 +251,7 @@
                                       data-toggle="modal" data-target="#ModalUP"><i class="fas fa-edit"></i>
                                     </button>
                                   </td>
-                              </tr>
+                              </tr> -->
                             </tbody>
                         </table>
                     </div>
