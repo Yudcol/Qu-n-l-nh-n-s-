@@ -60,7 +60,7 @@
             </a>
           </li>
           <li>
-            <a href="#" class="right-arrow">
+            <a href="./khenthuong_kyluat.php" class="right-arrow">
               <i class="bi bi-star-fill icons"></i> Khen thưởng, kỷ luật
             </a>
           </li>
@@ -86,7 +86,9 @@
             alt="Lỗi hiển thị"
           />
           <span class="mg6">Admin 1</span>
-          <i class="bi bi-box-arrow-in-right icons mg6 log-out-icon"></i>
+          <a href="login.php" class="clwhite log-out-btn">          
+            <i class="bi bi-box-arrow-in-right icons mg6 log-out-icon"></i>
+          </a>
           </div>
         </div>
         <!-- End: Navbar -->
@@ -117,39 +119,38 @@
                     <div class="col-sm-12">
                         <h4 class="form-add-title">Tạo nhân viên mới</h4>
                         <div class="form-add-content">
-                            <form class="row">
+                            <form class="row" method="POST" action="../Controller/add_nv.php" enctype="multipart/form-data">
                                 <div class="form-group col-md-4">
                                   <label class="control-label">ID nhân viên</label>
-                                  <input class="form-control" type="text">
+                                  <input name="id" class="form-control" type="text">
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label class="control-label">Họ và tên</label>
-                                  <input class="form-control" type="text" required="">
+                                  <input name="name" class="form-control" type="text" required="">
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label class="control-label">Địa chỉ thường trú</label>
-                                  <input class="form-control" type="text" required="">
+                                  <input name="address" class="form-control" type="text" required="">
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label class="control-label">Giới tính</label>
-                                  <select class="form-control" id="exampleSelect2" required="">
+                                  <select name="gender" class="form-control" id="exampleSelect2" required="">
                                     <option>-- Chọn giới tính --</option>
                                     <option>Nam</option>
                                     <option>Nữ</option>
-                                    <option>Khác</option>
                                   </select>
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label class="control-label">Địa chỉ email</label>
-                                  <input class="form-control" type="text" required="">
+                                  <input name="email" class="form-control" type="text" required="">
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label class="control-label">Số điện thoại</label>
-                                  <input class="form-control" type="text" required="">
+                                  <input name="phone" class="form-control" type="text" required="">
                                 </div>
                                 <div class="form-group  col-md-4">
                                   <label for="exampleSelect1" class="control-label">Chức vụ</label>
-                                  <select class="form-control" id="exampleSelect1">
+                                  <select name="job" class="form-control" id="exampleSelect1">
                                     <option>-- Chọn chức vụ --</option>
                                     
                                     <?php
@@ -165,7 +166,7 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label class="control-label">Phòng ban</label>
-                                  <select class="form-control" id="exampleSelect3">
+                                  <select name="department" class="form-control" id="exampleSelect3">
                                     <option>-- Chọn phòng ban --</option>
                                     <?php
                                       $sql = "SELECT * FROM phongban";
@@ -180,7 +181,18 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label class="control-label">Bậc lương</label>
-                                  <input class="form-control" type="text" required="">
+                                  <select name="salary" class="form-control" id="exampleSelect3">
+                                    <option>-- Chọn bậc lương --</option>
+                                    <?php
+                                      $sql = "SELECT * FROM luong";
+                                      $resultluong = mysqli_query($conn, $sql);
+                                    ?>
+                                    <?php
+                                      while ($row = mysqli_fetch_assoc($resultluong)) {
+                                        echo "<option>". $row['bacLuong']."</option>";
+                                      } 
+                                    ?>
+                                  </select>
                                 </div>
                   
                                 <div class="form-group col-md-12">
@@ -197,11 +209,11 @@
                                     <p style="clear:both"></p>
                                   </div>
                                 </div>
+                                <div class="form-add-btn text-center">
+                                  <button name="add_emp" class="btn btn-save" type="submit">Lưu lại</button>
+                                  <a class="btn btn-cancel" href="./dsnhanvien.php">Hủy bỏ</a>
+                                </div>
                             </form>
-                        </div>
-                        <div class="form-add-btn text-center">
-                            <button class="btn btn-save" type="button">Lưu lại</button>
-                            <a class="btn btn-cancel" href="./dsnhanvien.php">Hủy bỏ</a>
                         </div>
                     </div>
                 </div>

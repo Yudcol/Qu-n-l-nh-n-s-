@@ -1,10 +1,14 @@
+<?php
+  include_once 'dbconfig.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Danh sách nhân viên</title>
+    <title>Khen thưởng - Kỷ luật</title>
     
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet"/>
@@ -67,6 +71,7 @@
           </li>
         </ul>
       </div>
+
       <div id="content">
         <!-- Begin: Navbar -->
         <div class="navbar clwhite">
@@ -82,9 +87,7 @@
             alt="Lỗi hiển thị"
           />
           <span class="mg6">Admin 1</span>
-          <a href="login.php" class="clwhite log-out-btn">          
-            <i class="bi bi-box-arrow-in-right icons mg6 log-out-icon"></i>
-          </a>
+          <a href="./form_login.php" class="clwhite log-out-btn"><i class="bi bi-box-arrow-in-right icons mg6 log-out-icon"></i></a>
           </div>
         </div>
         <!-- End: Navbar -->
@@ -92,7 +95,7 @@
         <!-- Begin: Thanh tiêu đề -->
         <nav class="navbar tieude">
           <div class="container-fluid">
-            <a class="navbar-brand clwhite navbar-title">Bảng thống kê lương</a>
+            <a class="navbar-brand clwhite navbar-title">Khen thưởng - Kỷ luật</a>
             <form class="d-flex form-search">
               <input
                 class="form-control me-2"
@@ -108,61 +111,97 @@
         </nav>
         <!-- End: Thanh tiêu đề -->
 
-        <!-- Begin: Danh sách lương -->
+        <!-- Begin: Danh sách khen thưởng, kỷ luật -->
         <div class="row">
-          <div class="col-md-12">
-            <div class="row element-button">
-              <div class="col-s-2">
-                <a class="btn btn-add btn-sm" href="./form_thembangluong.php" title="Thêm"><i class="fas fa-plus"></i>
-                  Tạo bản ghi mới</a>
-              </div>
-              <div class="col-s-2">
-                <a class="btn btn-sm nhap-tu-file" type="button" title="Nhập"><i class="fas fa-file-upload"></i> Tải từ file</a>
-              </div>
-    
-              <div class="col-s-2">
-                <a class="btn btn-excel btn-sm" href="" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</a>
-              </div>
-              <div class="col-s-2">
-                <a class="btn btn-sm pdf-file" type="button" title="In"><i class="fas fa-file-pdf"></i> Xuất PDF</a>
-              </div>
-              <div class="col-s-2">
-                <a class="btn btn-sm btn-delete" type="button" title="Xóa"><i class="fas fa-trash-alt"></i> Xóa tất cả </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6 khenthuong">
                 <div class="row" id="ds-table">
                     <div class="col-sm-12">
-                    <span class="table-title">Bảng tính lương</span>
+                    <span class="table-title">Danh sách khen thưởng</span>
                         <table class="table table-hover table-responsive table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0">
                             <thead>
                                 <tr>
-                                    <th>STT <i class="bi bi-sort-down"></i></th>
-                                    <th>Mã nhân viên</th>
-                                    <th class="table-address" width="150">Họ và tên</th>
-                                    <th>Chức vụ</th>
-                                    <th>Tiền lương</th>
+                                    <th>ID</th>
+                                    <th class="table-ct">Nội dung</th>
                                     <th>Tiền thưởng</th>
-                                    <th>Tiền phạt</th>
-                                    <th>Thực lĩnh</th>
-                                    <th class="table-status-sal">Trạng thái</th>
                                     <th class="table-act">Hành động</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>01</td>
-                                    <td>2019600822</td>
-                                    <td>Trần Đức Anh</td>
-                                    <td>Nhân viên</td>
-                                    <td>7.500.000đ</td>
-                                    <td>Không</td>
-                                    <td>Không</td>
-                                    <td>7.500.000đ</td>
-                                    <td class="text-center"><span class="table-status-emp status-on">Đã nhận</span></td>
+                                    <td>Đạt KPI</td>
+                                    <td>500.000đ</td>
+                                    <td class="table-td-center"><button class="btn btn-primary btn-sm trash" type="button" title="Xóa">
+                                      <i class="fas fa-trash-alt"></i>
+                                      </button>
+                                      <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
+                                        data-toggle="modal" data-target="#ModalUP"><i class="fas fa-edit"></i>
+                                      </button>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>01</td>
+                                    <td>Đạt KPI</td>
+                                    <td>500.000đ</td>
+                                    <td class="table-td-center"><button class="btn btn-primary btn-sm trash" type="button" title="Xóa">
+                                      <i class="fas fa-trash-alt"></i>
+                                      </button>
+                                      <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
+                                        data-toggle="modal" data-target="#ModalUP"><i class="fas fa-edit"></i>
+                                      </button>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>01</td>
+                                    <td>Đạt KPI</td>
+                                    <td>500.000đ</td>
+                                    <td class="table-td-center"><button class="btn btn-primary btn-sm trash" type="button" title="Xóa">
+                                      <i class="fas fa-trash-alt"></i>
+                                      </button>
+                                      <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
+                                        data-toggle="modal" data-target="#ModalUP"><i class="fas fa-edit"></i>
+                                      </button>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>01</td>
+                                    <td>Đạt KPI</td>
+                                    <td>500.000đ</td>
+                                    <td class="table-td-center"><button class="btn btn-primary btn-sm trash" type="button" title="Xóa">
+                                      <i class="fas fa-trash-alt"></i>
+                                      </button>
+                                      <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
+                                        data-toggle="modal" data-target="#ModalUP"><i class="fas fa-edit"></i>
+                                      </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 kyluat">
+                <div class="row" id="ds-table">
+                    <div class="col-sm-12">
+                    <span class="table-title">Danh sách kỷ luật</span>
+                        <table class="table table-hover table-responsive table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0">
+                        <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th class="table-ct">Nội dung</th>
+                                    <th>Tiền phạt</th>
+                                    <th class="table-act">Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>01</td>
+                                    <td>Đi làm muộn</td>
+                                    <td>100.000đ</td>
                                     <td class="table-td-center"><button class="btn btn-primary btn-sm trash" type="button" title="Xóa">
                                       <i class="fas fa-trash-alt"></i>
                                       </button>
@@ -174,14 +213,8 @@
 
                                 <tr>
                                     <td>02</td>
-                                    <td>2019600822</td>
-                                    <td>Trần Đức Anh</td>
-                                    <td>Nhân viên</td>
-                                    <td>7.500.000đ</td>
-                                    <td>Không</td>
-                                    <td>200.000đ</td>
-                                    <td>7.300.000đ</td>
-                                    <td class="text-center"><span class="table-status-emp status-on">Đã nhận</span></td>
+                                    <td>Không đạt KPI</td>
+                                    <td>300.000đ</td>
                                     <td class="table-td-center"><button class="btn btn-primary btn-sm trash" type="button" title="Xóa">
                                       <i class="fas fa-trash-alt"></i>
                                       </button>
@@ -192,15 +225,9 @@
                                 </tr>
 
                                 <tr>
-                                    <td>03</td>
-                                    <td>2019600822</td>
-                                    <td>Trần Đức Anh</td>
-                                    <td>Nhân viên</td>
-                                    <td>7.500.000đ</td>
-                                    <td>Không</td>
-                                    <td>Không</td>
-                                    <td>7.500.000đ</td>
-                                    <td class="text-center"><span class="table-status-emp status-off">Chưa nhận</span></td>
+                                    <td>02</td>
+                                    <td>Không đạt KPI</td>
+                                    <td>300.000đ</td>
                                     <td class="table-td-center"><button class="btn btn-primary btn-sm trash" type="button" title="Xóa">
                                       <i class="fas fa-trash-alt"></i>
                                       </button>
@@ -211,30 +238,24 @@
                                 </tr>
 
                                 <tr>
-                                  <td>04</td>
-                                  <td>2019600822</td>
-                                  <td>Trần Đức Anh</td>
-                                  <td>Nhân viên</td>
-                                  <td>7.500.000đ</td>
-                                  <td>Không</td>
-                                  <td>Không</td>
-                                  <td>7.500.000đ</td>
-                                  <td class="text-center"><span class="table-status-emp status-off">Chưa nhận</span></td>
-                                  <td class="table-td-center"><button class="btn btn-primary btn-sm trash" type="button" title="Xóa">
-                                    <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                    <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
-                                      data-toggle="modal" data-target="#ModalUP"><i class="fas fa-edit"></i>
-                                    </button>
-                                  </td>
-                              </tr>
+                                    <td>02</td>
+                                    <td>Không đạt KPI</td>
+                                    <td>300.000đ</td>
+                                    <td class="table-td-center"><button class="btn btn-primary btn-sm trash" type="button" title="Xóa">
+                                      <i class="fas fa-trash-alt"></i>
+                                      </button>
+                                      <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
+                                        data-toggle="modal" data-target="#ModalUP"><i class="fas fa-edit"></i>
+                                      </button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- End: Danh sách lương -->
+        <!-- End: Danh sách khen thưởng, kỷ luật -->
       </div>
     </div>
     <div class="modal js-modal close">
@@ -242,7 +263,7 @@
           <div class="modal-title m-title">Cảnh báo</div>
           <div class="modal-content m-content">Bạn có chắc chắn muốn xóa bản ghi này?</div>
           <div class="modal-btn">
-            <button class="btn btn-save" type="button">Đồng ý</button>
+            <button class="btn btn-save" type="button">Lưu lại</button>
             <button class="btn btn-cancel" type="button">Hủy bỏ</button>
           </div>
       </div>

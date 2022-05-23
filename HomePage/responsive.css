@@ -16,10 +16,13 @@
         margin-top: 0;
     }
     .table .table-hoten {
-        min-width: 100px;
-    }
-    .table .table-address {
         min-width: 150px;
+    }
+
+    #content .khenthuong, #content .kyluat {
+        margin-bottom: 10px !important;
+        -webkit-box-flex: 0;
+        max-width: 100%;
     }
 }
 

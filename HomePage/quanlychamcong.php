@@ -1,3 +1,7 @@
+<?php
+  include 'dbconfig.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -56,7 +60,7 @@
             </a>
           </li>
           <li>
-            <a href="#" class="right-arrow">
+            <a href="./khenthuong_kyluat.php" class="right-arrow">
               <i class="bi bi-star-fill icons"></i> Khen thưởng, kỷ luật
             </a>
           </li>
@@ -82,7 +86,9 @@
             alt="Lỗi hiển thị"
           />
           <span class="mg6">Admin 1</span>
-          <i class="bi bi-box-arrow-in-right icons mg6 log-out-icon"></i>
+          <a href="login.php" class="clwhite log-out-btn">          
+            <i class="bi bi-box-arrow-in-right icons mg6 log-out-icon"></i>
+          </a>
           </div>
         </div>
         <!-- End: Navbar -->
@@ -136,7 +142,7 @@
               <div class="col-sm-12">
                 <div class="cc-info">
                   Bảng chấm công nhân viên <br>
-                  Thời gian: 03/2022
+                  Thời gian: <?php echo date("m/Y") ?>
                   <div class="dataTables_length" id="sampleTable_length">
                     <label>Show
                       <select name="sampleTable_length" aria-controls="sampleTable" class="form-control-sm">
@@ -151,43 +157,44 @@
                 <table class="table bgwhite table-striped table-responsive table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0">
                   <thead>
                     <tr>
+                      <th>ID</th>
                       <th class="table-name">Họ và tên nhân viên</th>
-                      <th>01</th>
-                      <th>02</th>
-                      <th>03</th>
-                      <th>04</th>
-                      <th>05</th>
-                      <th>06</th>
-                      <th>07</th>
-                      <th>08</th>
-                      <th>09</th>
-                      <th>10</th>
-                      <th>11</th>
-                      <th>12</th>
-                      <th>13</th>
-                      <th>14</th>
-                      <th>15</th>
-                      <th>16</th>
-                      <th>17</th>
-                      <th>18</th>
-                      <th>19</th>
-                      <th>20</th>
-                      <th>21</th>
-                      <th>22</th>
-                      <th>23</th>
-                      <th>24</th>
-                      <th>25</th>
-                      <th>26</th>
-                      <th>27</th>
-                      <th>28</th>
-                      <th>29</th>
-                      <th>30</th>
-                      <th>31</th>
-                      <th class="table-sum">Tổng ngày đi làm</th>
+                      <?php
+                        for($i = 1; $i <= date ("d"); $i++) {
+                          if($i < 10)
+                            echo "<th>0" .$i ."</th>";
+                          else
+                            echo "<th>" .$i ."</th>";
+                        }
+                        echo "<th>Tổng ngày đi làm</th>";
+                      ?>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                  <?php
+                      $sql = "select * from nhanvien order by maNV";
+                      $result = mysqli_query($conn, $sql);
+                      if($result->num_rows > 0) {
+                        while ($row = mysqli_fetch_array($result)) {
+                          echo "<tr>";
+                          echo "<td>" .$row['maNV'] ."</td>";
+                          echo "<td class='table-name'>" .$row['tenNV'] ."</td>";
+                          $count = 0;
+                          for($i = 1; $i <= date ("d"); $i++) {
+                              $rand = rand(1, 4);
+                              if($rand == 1)
+                                echo "<td style='color: #f00;'>v</td>";
+                              else {
+                                echo "<td>x</td>";
+                                $count++;
+                              }
+                            }
+                          echo "<td class='table-sum'>" .$count ."</td>";
+                          echo "</tr>";
+                        }
+                      }
+                    ?>
+                    <!-- <tr>
                       <td class="table-name">Trần Đức Anh</td>
                       <td>x</td>
                       <td>x</td>
@@ -222,7 +229,6 @@
                       <td>x</td>
                       <td class="table-sum">27</td>
                     </tr>
-
                     <tr>
                       <td class="table-name">Trần Đức Anh</td>
                       <td>x</td>
@@ -257,43 +263,7 @@
                       <td>x</td>
                       <td>x</td>
                       <td class="table-sum">27</td>
-                    </tr>
-
-                    <tr>
-                      <td class="table-name">Trần Đức Anh</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>v</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>v</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>v</td>
-                      <td>v</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td>x</td>
-                      <td class="table-sum">27</td>
-                    </tr>
+                    </tr> -->
                   </tbody>
                 </table>
               </div>

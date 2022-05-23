@@ -56,7 +56,7 @@
             </a>
           </li>
           <li>
-            <a href="#" class="right-arrow">
+            <a href="./khenthuong_kyluat.php" class="right-arrow">
               <i class="bi bi-star-fill icons"></i> Khen thưởng, kỷ luật
             </a>
           </li>
@@ -83,7 +83,9 @@
             alt="Lỗi hiển thị"
           />
           <span class="mg6">Admin 1</span>
-          <i class="bi bi-box-arrow-in-right icons mg6 log-out-icon"></i>
+          <a href="login.php" class="clwhite log-out-btn">          
+            <i class="bi bi-box-arrow-in-right icons mg6 log-out-icon"></i>
+          </a>
           </div>
         </div>
         <!-- End: Navbar -->

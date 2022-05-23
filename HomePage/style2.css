@@ -149,6 +149,10 @@ html {
     margin-right: 12px !important;
 }
 
+#content .navbar .log-out-btn:hover {
+    color: #e6f60a;
+}
+
 #content .tieude {
     height: 50px;
     background-color: #C4C4C4;
@@ -248,6 +252,9 @@ span.num {
 
 .table .img-table {
     width: 100px;
+}
+.table .table-ct {
+    min-width: 220px;
 }
 
 .table .table-status {

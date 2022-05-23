@@ -1,6 +1,6 @@
 <?php
     include 'dbconfig.php';
-    $sql = "SELECT * FROM `nhanvien` INNER JOIN chucvu WHERE nhanvien.maChucVu = chucvu.maChucVu;";
+    $sql = "SELECT * FROM `nhanvien` INNER JOIN chucvu WHERE nhanvien.maChucVu = chucvu.maChucVu order by maNV;";
     $result = mysqli_query($conn, $sql);
 ?>
 
@@ -62,7 +62,7 @@
             </a>
           </li>
           <li>
-            <a href="#" class="right-arrow">
+            <a href="./khenthuong_kyluat.php" class="right-arrow">
               <i class="bi bi-star-fill icons"></i> Khen thưởng, kỷ luật
             </a>
           </li>
@@ -88,7 +88,9 @@
             alt="Lỗi hiển thị"
           />
           <span class="mg6">Admin 1</span>
-          <i class="bi bi-box-arrow-in-right icons mg6 log-out-icon"></i>
+          <a href="login.php" class="clwhite log-out-btn">          
+            <i class="bi bi-box-arrow-in-right icons mg6 log-out-icon"></i>
+          </a>
           </div>
         </div>
         <!-- End: Navbar -->
@@ -156,6 +158,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                              <form action="../Controller/delete_nv.php" method="get">
                               <?php
                               if($result->num_rows > 0) {
                                 $i = 1;
@@ -168,90 +171,35 @@
                                   echo "<td>". $row['thanhPho']."</td>";
                                   echo "<td>". $row['soDT']."</td>";
                                   echo "<td>". $row['tenChucVu']."</td>";
-                                  echo "<td class='text-center'><span class='table-status-emp status-on'>Đang đi làm</span></td>";
-                                  echo "<td class='table-td-center'><button class='btn btn-primary btn-sm trash' type='button' title='Xóa'>
-                                      <i class='fas fa-trash-alt'></i>
-                                      </button>
-                                      <button class='btn btn-primary btn-sm edit' type='button' title='Sửa' id='show-emp'
-                                        data-toggle='modal' data-target='#ModalUP'><i class='fas fa-edit'></i>
-                                      </button>
-                                    </td>";
-                                    echo "</tr>";
-                                    $i++;
+                                  $rand = rand(1, 4);
+                                  if($rand == 1)
+                                    echo "<td class='text-center'><span class='table-status-emp status-off'>Không đi làm</span></td>";
+                                  else
+                                    echo "<td class='text-center'><span class='table-status-emp status-on'>Đang đi làm</span></td>";
+
+                                  echo "<td class='table-td-center'><button name ='delete' value='".$row['maNV']."' class='btn btn-primary btn-sm trash' type='submit' title='Xóa'>
+                                    <i class='fas fa-trash-alt'></i>
+                                    </button>
+                                    <button class='btn btn-primary btn-sm edit' type='button' title='Sửa' id='show-emp'
+                                      data-toggle='modal' data-target='#ModalUP'><i class='fas fa-edit'></i>
+                                    </button>
+                                  </td>";
+                                  echo "</tr>";
+                                //   echo "<div class='modal js-modal close'>";
+                                //   echo "<div class='modal-container js-modal-container text-center'>";
+                                //   echo "<div class='modal-title m-title'>Cảnh báo</div>";
+                                //   echo "<div class='modal-content m-content'>Bạn có chắc chắn muốn xóa nhân viên này?</div>";
+                                //   echo "<div class='modal-btn'>";
+                                //     echo "<button name='hi' value='" .$row['maNV'] ."'class='btn btn-save' type='submit'>Đồng ý</button>";
+                                //     echo "<button class='btn btn-cancel' type='button'>Hủy bỏ</button>";
+                                //   echo "</div>
+                                // </div>";
+                                  $i++;
                                 }
                               }
                               ?>
-                                <!-- <tr>
-                                    <td>01</td>
-                                    <td>2019600822</td>
-                                    <td><img class="img-table" src="../assets/img/avatar_account.webp" alt=""></td>
-                                    <td>Trần Đức Anh</td>
-                                    <td>155-157 Trần Quốc Thảo, Quận 3, Hồ Chí Minh</td>
-                                    <td>0961957832</td>
-                                    <td>Nhân viên</td>
-                                    <td class="text-center"><span class="table-status-emp status-on">Đang làm việc</span></td>
-                                    <td class="table-td-center"><button class="btn btn-primary btn-sm trash" type="button" title="Xóa">
-                                      <i class="fas fa-trash-alt"></i>
-                                      </button>
-                                      <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
-                                        data-toggle="modal" data-target="#ModalUP"><i class="fas fa-edit"></i>
-                                      </button>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>02</td>
-                                    <td>2019600822</td>
-                                    <td><img class="img-table" src="../assets/img/avatar_account.webp" alt=""></td>
-                                    <td>Trần Đức Anh</td>
-                                    <td>155-157 Trần Quốc Thảo, Quận 3, Hồ Chí Minh</td>
-                                    <td>0961957832</td>
-                                    <td>Nhân viên</td>
-                                    <td class="text-center"><span class="table-status-emp status-on">Đang làm việc</span></td>
-                                    <td class="table-td-center"><button class="btn btn-primary btn-sm trash" type="button" title="Xóa">
-                                      <i class="fas fa-trash-alt"></i>
-                                      </button>
-                                      <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
-                                        data-toggle="modal" data-target="#ModalUP"><i class="fas fa-edit"></i>
-                                      </button>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>03</td>
-                                    <td>2019600822</td>
-                                    <td><img class="img-table" src="../assets/img/avatar_account.webp" alt=""></td>
-                                    <td>Trần Đức Anh</td>
-                                    <td>155-157 Trần Quốc Thảo, Quận 3, Hồ Chí Minh</td>
-                                    <td>0961957832</td>
-                                    <td>Nhân viên</td>
-                                    <td class="text-center"><span class="table-status-emp status-off">Không đi làm</span></td>
-                                    <td class="table-td-center"><button class="btn btn-primary btn-sm trash" type="button" title="Xóa">
-                                      <i class="fas fa-trash-alt"></i>
-                                      </button>
-                                      <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
-                                        data-toggle="modal" data-target="#ModalUP"><i class="fas fa-edit"></i>
-                                      </button>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                  <td>04</td>
-                                  <td>2019600822</td>
-                                  <td><img class="img-table" src="../assets/img/avatar_account.webp" alt=""></td>
-                                  <td>Trần Đức Anh</td>
-                                  <td>155-157 Trần Quốc Thảo, Quận 3, Hồ Chí Minh</td>
-                                  <td>0961957832</td>
-                                  <td>Nhân viên</td>
-                                  <td class="text-center"><span class="table-status-emp status-off">Không đi làm</span></td>
-                                  <td class="table-td-center"><button class="btn btn-primary btn-sm trash" type="button" title="Xóa">
-                                    <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                    <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
-                                      data-toggle="modal" data-target="#ModalUP"><i class="fas fa-edit"></i>
-                                    </button>
-                                  </td>
-                              </tr> -->
+                              </div>
+                            </form>
                             </tbody>
                         </table>
                     </div>
@@ -259,16 +207,6 @@
             </div>
         </div>
         <!-- End: Danh sách nhân viên -->
-      </div>
-    </div>
-    <div class="modal js-modal close">
-      <div class="modal-container js-modal-container text-center">
-          <div class="modal-title m-title">Cảnh báo</div>
-          <div class="modal-content m-content">Bạn có chắc chắn muốn xóa nhân viên này?</div>
-          <div class="modal-btn">
-            <button class="btn btn-save" type="button">Lưu lại</button>
-            <button class="btn btn-cancel" type="button">Hủy bỏ</button>
-          </div>
       </div>
     </div>
     <script src="./main.js"></script>

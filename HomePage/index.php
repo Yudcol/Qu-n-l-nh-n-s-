@@ -1,7 +1,5 @@
 <?php
     include 'dbconfig.php';
-    $sql = "select * FROM phongban inner join nhanvien WHERE nhanvien.maPhongBan = phongban.maPhongBan and nhanvien.maNV = phongban.maTruongP;";
-    $result = mysqli_query($conn, $sql);
 ?>
 
 <!DOCTYPE html>
@@ -65,7 +63,7 @@
             </a>
           </li>
           <li>
-            <a href="#" class="right-arrow">
+            <a href="./khenthuong_kyluat.php" class="right-arrow">
               <i class="bi bi-star-fill icons"></i> Khen thưởng, kỷ luật
             </a>
           </li>
@@ -92,7 +90,7 @@
             alt="Lỗi hiển thị"
           />
           <span class="mg6">Admin 1</span>
-          <a href="login.php">          
+          <a href="login.php" class="clwhite log-out-btn">          
             <i class="bi bi-box-arrow-in-right icons mg6 log-out-icon"></i>
           </a>
           </div>
@@ -122,7 +120,14 @@
           <div class="row text-center items">
             <a href="./dsnhanvien.php" class="col-sm mg6 d-flex item" style="background-color: #CF2B2B;">
               <div class="col-7 d-flex flex-column item-info">
-                <span class="num">04</span>
+                <span class="num"><?php
+                  $sql = "SELECT * FROM `nhanvien` INNER JOIN chucvu WHERE nhanvien.maChucVu = chucvu.maChucVu;";
+                  $result = mysqli_query($conn, $sql);
+                  if($result->num_rows < 10)
+                    echo "0" .$result->num_rows;
+                  else
+                    echo $result->num_rows;
+                ?></span>
                 <span class="te">Nhân viên</span>
               </div>
               <div class="col-5 flex-column item-logo">
@@ -131,7 +136,16 @@
             </a>
             <a href="#ds-table" class="col-sm mg6 d-flex item" style="background-color: #42A8C8;">
               <div class="col-7 d-flex flex-column item-info">
-                <span class="num">02</span>
+                <span class="num">
+                  <?php
+                    $sql = "select * FROM phongban inner join nhanvien WHERE nhanvien.maPhongBan = phongban.maPhongBan and nhanvien.maNV = phongban.maTruongP;";
+                    $result = mysqli_query($conn, $sql);
+                    if($result->num_rows < 10)
+                      echo "0" .$result->num_rows;
+                    else
+                      echo $result->num_rows;
+                  ?>
+                </span>
                 <span class="te">Phòng ban</span>
               </div>
               <div class="col-5 flex-column item-logo">
@@ -179,7 +193,11 @@
                                   echo "<td>". $row['tenNV']."</td>";
                                   echo '<td><img src="data:image;base64,'.base64_encode($row['avatar']) .'" alt="image" style="width:100px;height:100px;" ></td>';
                                   echo "<td>". $row['soDT']."</td>";
-                                  echo "<td class='text-center'><span class='table-status-emp status-on'>Đang đi làm</span></td>";
+                                  $rand = rand(1, 3);
+                                  if($rand == 1)
+                                    echo "<td class='text-center'><span class='table-status-emp status-off'>Không đi làm</span></td>";
+                                  else
+                                    echo "<td class='text-center'><span class='table-status-emp status-on'>Đang đi làm</span></td>";
                                   echo "<td class='table-td-center'><button class='btn btn-primary btn-sm trash' type='button' title='Xóa'>
                                       <i class='fas fa-trash-alt'></i>
                                       </button>
@@ -205,7 +223,7 @@
           <div class="modal-title m-title">Cảnh báo</div>
           <div class="modal-content m-content">Bạn có chắc chắn muốn xóa bản ghi này?</div>
           <div class="modal-btn">
-            <button class="btn btn-save" type="button">Lưu lại</button>
+            <button class="btn btn-save" type="button">Đồng ý</button>
             <button class="btn btn-cancel" type="button">Hủy bỏ</button>
           </div>
       </div>
