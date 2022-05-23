@@ -88,7 +88,7 @@
             alt="Lỗi hiển thị"
           />
           <span class="mg6">Admin 1</span>
-          <i class="bi bi-box-arrow-in-right icons mg6 log-out-icon"></i>
+          <a href="logout.php"><i class="bi bi-box-arrow-in-right icons mg6 log-out-icon"></i></a>
           </div>
         </div>
         <!-- End: Navbar -->
@@ -157,29 +157,44 @@
                             </thead>
                             <tbody>
                               <?php
-                              if($result->num_rows > 0) {
-                                $i = 1;
-                                while ($row = mysqli_fetch_assoc($result)) {
-                                  echo "<tr>";
-                                  echo "<td>". $i."</td>";
-                                  echo "<td>". $row['maNV']."</td>";
-                                  echo '<td><img src="data:image;base64,'.base64_encode($row['avatar']) .'" alt="image" style="width:100px;height:100px;" ></td>';
-                                  echo "<td>". $row['tenNV']."</td>";
-                                  echo "<td>". $row['thanhPho']."</td>";
-                                  echo "<td>". $row['soDT']."</td>";
-                                  echo "<td>". $row['tenChucVu']."</td>";
-                                  echo "<td class='text-center'><span class='table-status-emp status-on'>Đang đi làm</span></td>";
-                                  echo "<td class='table-td-center'><button class='btn btn-primary btn-sm trash' type='button' title='Xóa'>
-                                      <i class='fas fa-trash-alt'></i>
-                                      </button>
-                                      <button class='btn btn-primary btn-sm edit' type='button' title='Sửa' id='show-emp'
-                                        data-toggle='modal' data-target='#ModalUP'><i class='fas fa-edit'></i>
-                                      </button>
-                                    </td>";
-                                    echo "</tr>";
-                                    $i++;
+                                if($result->num_rows > 0) {
+                                  $i = 1;
+                                  while ($row = mysqli_fetch_assoc($result)) { 
+                                    ?>
+                                    <!-- echo "<tr>";
+                                    echo "<td>". $i."</td>";
+                                    echo "<td>". $row['maNV']."</td>";
+                                    echo '<td><img src="data:image;base64,'.base64_encode($row['avatar']) .'" alt="image" style="width:100px;height:100px;" ></td>';
+                                    echo "<td>". $row['tenNV']."</td>";
+                                    echo "<td>". $row['thanhPho']."</td>";
+                                    echo "<td>". $row['soDT']."</td>";
+                                    echo "<td>". $row['tenChucVu']."</td>";
+                                    echo "<td class='text-center'><span class='table-status-emp status-on'>Đang đi làm</span></td>";
+                                    echo "<td class='table-td-center'><button class='btn btn-primary btn-sm trash' type='button' title='Xóa'>
+                                        <i class='fas fa-trash-alt'></i>
+                                        </button>
+                                        <button class='btn btn-primary btn-sm edit' type='button' title='Sửa' id='show-emp'
+                                          data-toggle='modal' data-target='#ModalUP'><i class='fas fa-edit'></i>
+                                        </button>
+                                      </td>";
+                                      echo "</tr>";
+                                      $i++; -->
+                                      <tr>
+                                        <td><?php echo $i ?></td>
+                                        <td><?php echo $row['maNV'] ?></td>
+                                        <td><?php echo '<img src="data:image;base64,'.base64_encode($row['avatar']) .'" alt="image" style="width:100px;height:100px;" >'; ?></td>
+                                        <td><?php echo $row['tenNV'] ?></td>
+                                        <td><?php echo $row['thanhPho'] ?></td>
+                                        <td><?php echo $row['soDT'] ?></td>
+                                        <td><?php echo $row['tenChucVu'] ?></td>
+                                        <td class='text-center'><span class='table-status-emp status-on'>Đang đi làm</span></td>
+                                        <td><a class="btn btn-info" href="update.php?id= <?php echo $row['id']; ?>">Edit</a>
+                                        &nbsp;
+                                        <a class="btn btn-danger"href="delete.php?id=<?php echo $row['id']; ?>">Delete</a></td>
+                                        <?php $i++ ?>;
+                                      </tr>
+                                 <?php }
                                 }
-                              }
                               ?>
                                 <!-- <tr>
                                     <td>01</td>

@@ -1,4 +1,9 @@
 <?php
+    ob_start();
+    session_start();
+    if(!isset($_SESSION['login'])) {
+      header("location: login.php");
+    }
     include 'dbconfig.php';
     $sql = "select * FROM phongban inner join nhanvien WHERE nhanvien.maPhongBan = phongban.maPhongBan and nhanvien.maNV = phongban.maTruongP;";
     $result = mysqli_query($conn, $sql);
@@ -92,7 +97,7 @@
             alt="Lỗi hiển thị"
           />
           <span class="mg6">Admin 1</span>
-          <a href="login.php">          
+          <a href="logout.php">          
             <i class="bi bi-box-arrow-in-right icons mg6 log-out-icon"></i>
           </a>
           </div>

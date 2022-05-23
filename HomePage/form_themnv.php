@@ -1,6 +1,50 @@
-<?php
-  include_once 'dbconfig.php';
-?>
+<!-- <?php
+  include_once 'config.php';
+
+  if(isset($_POST['submit']))
+  {
+    $_name = $_POST['name'];
+    $_address = $_POST['address'];
+    $_email = $_POST['email'];
+    $_sex = $_POST['sex'];
+    $_class = $_POST['class'];
+    $_department = $_POST['department'];
+    $_img_name = $_FILES['ImageUpload']['name'];
+    $_img_size = $_FILES['ImageUpload']['size'];
+    $_img_tmp_name = $_FILES['ImageUpload']['tmp_name'];
+    $_img_err =  $_FILES['ImageUpload']['error'];
+    if($_img_err === 0){
+      if($_img_size > 1600000) {
+        $_errror = "File lớn hơn 16mb";
+        // header("location: form_themnv.php?error=$_error");
+        include 'form_themnv.php';
+      }
+      else {
+        $_img_ex = pathinfo($_img_name, PATHINFO_EXTENSION);
+        $_img_ex_lc = strtolower($_img_ex);
+        $_allowed_exs = array("jpg", "png", "jpeg");
+
+        if(in_array($img_ex_lc, $_allowed_exs)) {
+          $_new_img_name = uniqid("IMG-", true).'.'.$_img_ex_lc;
+          $_img_upload_path = '../upload/'.$_new_img_name;
+          move_uploaded_file($_img_tmp_name, $_img_upload_path);
+        }
+        else {
+          $_error = "File upload không phải ảnh";
+          include 'form_themnv.php';
+        }
+      }
+    }
+    else
+    {
+      $_error = "Unknown error occurred!";
+      include 'form_themnv.php';
+      // header("location: form_themnv.php?error=$_error");
+    }
+
+  }
+
+?> -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -86,7 +130,7 @@
             alt="Lỗi hiển thị"
           />
           <span class="mg6">Admin 1</span>
-          <i class="bi bi-box-arrow-in-right icons mg6 log-out-icon"></i>
+          <a href="logout.php"><i class="bi bi-box-arrow-in-right icons mg6 log-out-icon"></i></a>
           </div>
         </div>
         <!-- End: Navbar -->
@@ -117,39 +161,39 @@
                     <div class="col-sm-12">
                         <h4 class="form-add-title">Tạo nhân viên mới</h4>
                         <div class="form-add-content">
-                            <form class="row">
+                            <form class="row" method="post" action="">
                                 <div class="form-group col-md-4">
                                   <label class="control-label">ID nhân viên</label>
                                   <input class="form-control" type="text">
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label class="control-label">Họ và tên</label>
-                                  <input class="form-control" type="text" required="">
+                                  <input class="form-control" type="text" required="" name="name">
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label class="control-label">Địa chỉ thường trú</label>
-                                  <input class="form-control" type="text" required="">
+                                  <input class="form-control" type="text" required="" name="address">
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label class="control-label">Giới tính</label>
-                                  <select class="form-control" id="exampleSelect2" required="">
+                                  <select class="form-control" id="exampleSelect2" required="" name="sex">
                                     <option>-- Chọn giới tính --</option>
-                                    <option>Nam</option>
-                                    <option>Nữ</option>
-                                    <option>Khác</option>
+                                    <option value="1">Nam</option>
+                                    <option value="2">Nữ</option>
+                                    <option value="3">Khác</option>
                                   </select>
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label class="control-label">Địa chỉ email</label>
-                                  <input class="form-control" type="text" required="">
+                                  <input class="form-control" type="text" required="" name="email">
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label class="control-label">Số điện thoại</label>
-                                  <input class="form-control" type="text" required="">
+                                  <input class="form-control" type="text" required="" name="phone">
                                 </div>
                                 <div class="form-group  col-md-4">
                                   <label for="exampleSelect1" class="control-label">Chức vụ</label>
-                                  <select class="form-control" id="exampleSelect1">
+                                  <select class="form-control" id="exampleSelect1" name="class">
                                     <option>-- Chọn chức vụ --</option>
                                     
                                     <?php
@@ -165,7 +209,7 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label class="control-label">Phòng ban</label>
-                                  <select class="form-control" id="exampleSelect3">
+                                  <select class="form-control" id="exampleSelect3" name="department">
                                     <option>-- Chọn phòng ban --</option>
                                     <?php
                                       $sql = "SELECT * FROM phongban";
@@ -180,7 +224,7 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                   <label class="control-label">Bậc lương</label>
-                                  <input class="form-control" type="text" required="">
+                                  <input class="form-control" type="text" required="" name="salary">
                                 </div>
                   
                                 <div class="form-group col-md-12">
@@ -188,6 +232,7 @@
                                   <div id="myfileupload">
                                     <input type="file" id="uploadfile" name="ImageUpload" onchange="readURL(this);">
                                   </div>
+                                  <span><?php if(isset($_error)) echo $_error ?></span>
                                   <div id="thumbbox">
                                     <img height="300" width="300" alt="Thumb image" id="thumbimage" style="display: none">
                                     <a class="removeimg" href="javascript:"></a>
@@ -197,12 +242,12 @@
                                     <p style="clear:both"></p>
                                   </div>
                                 </div>
-                            </form>
-                        </div>
-                        <div class="form-add-btn text-center">
-                            <button class="btn btn-save" type="button">Lưu lại</button>
-                            <a class="btn btn-cancel" href="./dsnhanvien.php">Hủy bỏ</a>
-                        </div>
+                                <div class="form-add-btn text-center">
+                                    <button name="submit" class="btn btn-save" type="button">Lưu lại</button>
+                                    <a class="btn btn-cancel" href="./dsnhanvien.php">Hủy bỏ</a>
+                                </div>
+                              </form>
+                            </div>
                     </div>
                 </div>
             </div>

@@ -366,6 +366,9 @@ span.num {
 /* End: Giao diện: Chấm công */
 
 /* Giao diện: Form add nhân viên */
+.form-add-btn.text-center {
+    width: 100%;
+}
 #content .form-add {
     background-color: #fff;
     border-radius: 4px;
@@ -382,7 +385,6 @@ span.num {
     font-weight: 600;   
     font-size: 16px;
 }
-
 #content .form-add .btn-save,
 .modal .modal-btn .btn-save {
     background-color: rgb(166 236 171);
